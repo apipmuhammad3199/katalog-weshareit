@@ -295,19 +295,22 @@ const Home = () => {
                     const item = trip.items.find(i => i.id === itemId);
                     if (!item) return null;
                     return (
-                      <div key={itemId} className="flex items-center justify-between gap-4 mb-4">
-                        <div className="flex items-center gap-3 overflow-hidden">
+                      <div key={itemId} className="flex items-center justify-between gap-3 mb-4">
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
                           <img 
                             src={item.image} 
                             alt={item.name} 
-                            className="w-14 h-14 rounded-lg object-cover shrink-0 bg-gray-100" 
+                            style={{ width: '56px', height: '56px', minWidth: '56px', minHeight: '56px', objectFit: 'cover' }}
+                            className="w-14 h-14 min-w-14 min-h-14 aspect-square rounded-xl object-cover shrink-0 bg-gray-100 block" 
                           />
                           <div className="flex flex-col min-w-0">
-                            <h4 className="truncate font-medium text-slate-900">{item.name}</h4>
-                            <span className="text-sm text-gray-500">Qty: {qty}</span>
+                            <h4 className="truncate text-sm font-medium text-slate-900 leading-tight" title={item.name}>
+                              {item.name}
+                            </h4>
+                            <span className="text-xs text-gray-500 mt-1 font-medium">Qty: {qty}</span>
                           </div>
                         </div>
-                        <div className="font-semibold text-slate-900 shrink-0 whitespace-nowrap">
+                        <div className="text-sm font-semibold text-slate-900 shrink-0 whitespace-nowrap text-right pl-2">
                           Rp {(item.price * qty).toLocaleString('id-ID')}
                         </div>
                       </div>
