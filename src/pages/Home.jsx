@@ -138,13 +138,13 @@ const Home = () => {
     <div className="min-h-screen bg-[#f7f5f0] font-sans text-slate-900 pb-32 pt-20">
       
       {/* Hero Cover Image */}
-      <div className="relative w-full h-[40vh] min-h-[300px] md:h-[60vh] overflow-hidden">
+      <div className="relative w-full h-[40vh] min-h-75 md:h-[60vh] overflow-hidden">
         <img 
           src={trip.coverImage || 'https://images.unsplash.com/photo-1549405085-5ee66f57de89?auto=format&fit=crop&w=2000&q=80'} 
           alt={trip.title}
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
         <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
           <div className="mx-auto max-w-7xl">
             <Link to="/" className="inline-flex items-center gap-2 text-sm font-bold tracking-widest text-white/70 hover:text-white transition-colors mb-6 uppercase">

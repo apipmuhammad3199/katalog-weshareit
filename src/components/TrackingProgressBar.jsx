@@ -35,12 +35,12 @@ const TrackingProgressBar = ({ order }) => {
         
         <div className="relative flex justify-between items-center w-full z-0">
           {/* Continuous horizontal line (background) */}
-          <div className="absolute top-[28px] left-0 right-0 h-[2px] bg-gray-100 -z-10"></div>
+          <div className="absolute top-7 left-0 right-0 h-0.5 bg-gray-100 -z-10"></div>
           
           {/* Filled progress line */}
           {currentIndex > 0 && (
             <div 
-              className="absolute top-[28px] left-0 h-[2px] bg-[#B35938] -z-10 transition-all duration-500"
+              className="absolute top-7 left-0 h-0.5 bg-[#B35938] -z-10 transition-all duration-500"
               style={{ width: `${Math.min((currentIndex / (steps.length - 1)) * 100, 100)}%` }}
             ></div>
           )}

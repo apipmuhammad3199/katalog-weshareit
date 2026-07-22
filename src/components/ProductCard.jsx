@@ -8,7 +8,7 @@ const ProductCard = ({ product }) => {
   const isClosed = product.status === 'closed';
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-[1.5rem] bg-white border border-gray-100 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] h-full">
+    <div className="group flex flex-col overflow-hidden rounded-3xl bg-white border border-gray-100 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.08)] h-full">
       {/* Image Container */}
       <div className="relative w-full pb-[120%] overflow-hidden bg-gray-50">
         <img 

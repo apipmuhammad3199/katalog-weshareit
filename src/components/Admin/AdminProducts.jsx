@@ -56,7 +56,7 @@ const AdminProducts = () => {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {trip?.items?.map(item => (
-          <div key={item.id} className="flex flex-col overflow-hidden rounded-[1.5rem] border border-[#ebebeb] bg-white shadow-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] h-full">
+          <div key={item.id} className="flex flex-col overflow-hidden rounded-3xl border border-[#ebebeb] bg-white shadow-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] h-full">
             <div className="relative w-full pb-[100%] bg-slate-50">
               <img 
                 src={item.image || 'https://via.placeholder.com/150'} 

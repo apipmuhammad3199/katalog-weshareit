@@ -240,7 +240,7 @@ const Admin = () => {
                             </button>
                           )}
                         </div>
-                        <p className="text-xs text-gray-400 mt-0.5 truncate max-w-[150px]" title={order.customer.address}>{order.customer.address}</p>
+                        <p className="text-xs text-gray-400 mt-0.5 truncate max-w-37.5" title={order.customer.address}>{order.customer.address}</p>
                         <span className="inline-block mt-2 rounded bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500 uppercase tracking-wider">
                           {order.customer.shippingMethod}
                         </span>
@@ -250,7 +250,7 @@ const Admin = () => {
                       <td className="px-6 py-5">
                         <p className="font-bold text-[#B35938] mb-1">{order.tripTitle}</p>
                         {order.items.map((item, idx) => (
-                          <p key={idx} className="text-sm text-slate-600 truncate max-w-[150px]" title={item.name}>
+                          <p key={idx} className="text-sm text-slate-600 truncate max-w-37.5" title={item.name}>
                             <span className="font-bold">{item.quantity}x</span> {item.name}
                           </p>
                         ))}
