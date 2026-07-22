@@ -1,73 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MessageCircle, CheckCircle, Upload, AlertCircle, Copy, CheckCircle2 } from 'lucide-react';
+import { MessageCircle, CheckCircle, AlertCircle } from 'lucide-react';
 import TrackingProgressBar from '../components/TrackingProgressBar';
 
 const TrackingStatusView = () => {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
-  const [copied, setCopied] = useState(false);
-  const [pelunasanProofBase64, setPelunasanProofBase64] = useState(null);
 
   useEffect(() => {
-    const existingOrders = JSON.parse(localStorage.getItem('weshareit_orders') || '[]');
-    const foundOrder = existingOrders.find(o => o.id === id);
-    if (foundOrder) {
-      setOrder(foundOrder);
+    try {
+      const existingOrders = JSON.parse(localStorage.getItem('weshareit_orders') || '[]');
+      const foundOrder = existingOrders.find(o => o.id === id);
+      if (foundOrder) {
+        setOrder(foundOrder);
+      }
+    } catch (err) {
+      console.error('Error loading order from localStorage', err);
     }
   }, [id]);
 
-  const handleCopyBank = () => {
-    navigator.clipboard.writeText('1234567890');
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleUploadPelunasanProof = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPelunasanProofBase64(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const submitPelunasan = () => {
-    if (!pelunasanProofBase64) {
-      alert('Silakan upload bukti pelunasan.');
-      return;
-    }
-
-    const existingOrders = JSON.parse(localStorage.getItem('weshareit_orders') || '[]');
-    const updatedOrders = existingOrders.map(o => {
-      if (o.id === id) {
-        return { 
-          ...o, 
-          payment_status: 'AWAITING_VERIFICATION', 
-          order_status: 'PENDING', // Admin will process it
-          pelunasan_proof_file: pelunasanProofBase64 
-        };
-      }
-      return o;
-    });
-    
-    localStorage.setItem('weshareit_orders', JSON.stringify(updatedOrders));
-    
-    setOrder(prev => ({ 
-      ...prev, 
-      payment_status: 'AWAITING_VERIFICATION',
-      order_status: 'PENDING',
-      pelunasan_proof_file: pelunasanProofBase64
-    }));
-    
-    alert('Bukti pelunasan berhasil dikirim!');
-  };
-
   const handleWhatsApp = () => {
     if (!order) return;
-    const text = `Halo Admin, saya ingin menanyakan pesanan dengan ID: *${order.id}*\n\nNama: ${order.customer.name}\nTotal Pesanan: Rp ${order.total_amount.toLocaleString('id-ID')}\nStatus Pembayaran: ${order.payment_status}`;
+    const text = `Halo Admin, saya ingin menanyakan pesanan dengan ID: *${order.id}*\n\nNama: ${order.customer.name}\nTotal Pesanan: Rp ${order.total_amount?.toLocaleString('id-ID')}\nStatus Pembayaran: ${order.payment_status}`;
     const encodedText = encodeURIComponent(text);
     window.open(`https://wa.me/6281234567890?text=${encodedText}`, '_blank');
   };
@@ -156,14 +110,7 @@ const TrackingStatusView = () => {
           </div>
 
           {/* Order Progress Bar */}
-          <TrackingProgressBar 
-            order={order} 
-            onConfirmPayment={() => {
-              // This is a placeholder since the actual payment upload is handled by the existing modal or form.
-              // We'll alert for now, or just scroll to a hypothetical upload section if needed.
-              alert('Silakan upload bukti transfer di bagian bawah (jika tersedia).');
-            }} 
-          />
+          <TrackingProgressBar order={order} />
 
           <button onClick={handleWhatsApp} className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[#ebebeb] bg-white px-6 py-4 text-sm font-bold text-slate-700 shadow-[0_4px_15px_rgb(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_25px_rgb(0,0,0,0.05)] hover:border-slate-200 mt-6">
             <MessageCircle size={20} className="text-[#25D366]" />

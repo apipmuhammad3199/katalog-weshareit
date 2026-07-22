@@ -11,10 +11,10 @@ const getInitialTrips = () => {
 const useProductStore = create((set) => ({
   trips: getInitialTrips(),
 
-  updateTrips: (updatedTrips) => set((state) => {
+  updateTrips: (updatedTrips) => {
     localStorage.setItem('weshareit_trips', JSON.stringify(updatedTrips));
-    return { trips: updatedTrips };
-  }),
+    set({ trips: updatedTrips });
+  },
 }));
 
 export default useProductStore;

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-const useCartStore = create((set, get) => ({
+const useCartStore = create((set) => ({
   cart: {}, // { itemId: quantity }
   
   updateQuantity: (itemId, delta) =>

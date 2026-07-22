@@ -1,7 +1,7 @@
 import React from 'react';
 import { ShoppingBag, Plane, Wallet, Truck, CheckCircle2, MessageCircle } from 'lucide-react';
 
-const TrackingProgressBar = ({ order, onConfirmPayment }) => {
+const TrackingProgressBar = ({ order }) => {
   // New swapped steps
   const steps = [
     { id: 'PURCHASING', label: 'Pesanan\nDiproses', Icon: ShoppingBag },
