@@ -290,18 +290,24 @@ const Home = () => {
               <div className="sticky top-28 bg-white p-6 md:p-8 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col max-h-[calc(100vh-140px)]">
                 <h3 className="text-xl font-bold tracking-tight text-slate-900 mb-6">Order Summary</h3>
                 
-                <div className="flex-1 overflow-y-auto pr-2 space-y-4">
+                <div className="flex-1 overflow-y-auto pr-2">
                   {Object.entries(cart).map(([itemId, qty]) => {
                     const item = trip.items.find(i => i.id === itemId);
                     if (!item) return null;
                     return (
-                      <div key={itemId} className="flex items-center gap-4">
-                        <img src={item.image} alt={item.name} className="w-14 h-14 rounded-lg object-cover bg-gray-100 shrink-0" />
-                        <div className="flex flex-col">
-                          <h4 className="font-bold text-slate-900">{item.name}</h4>
-                          <p className="text-sm text-gray-500">Qty: {qty}</p>
+                      <div key={itemId} className="flex items-center justify-between gap-4 mb-4">
+                        <div className="flex items-center gap-3 overflow-hidden">
+                          <img 
+                            src={item.image} 
+                            alt={item.name} 
+                            className="w-14 h-14 rounded-lg object-cover flex-shrink-0 bg-gray-100" 
+                          />
+                          <div className="flex flex-col min-w-0">
+                            <h4 className="truncate font-medium text-slate-900">{item.name}</h4>
+                            <span className="text-sm text-gray-500">Qty: {qty}</span>
+                          </div>
                         </div>
-                        <div className="ml-auto font-medium text-slate-900">
+                        <div className="font-semibold text-slate-900 flex-shrink-0 whitespace-nowrap">
                           Rp {(item.price * qty).toLocaleString('id-ID')}
                         </div>
                       </div>
@@ -336,7 +342,7 @@ const Home = () => {
                     id="terms"
                     checked={isAgreed}
                     onChange={(e) => setIsAgreed(e.target.checked)}
-                    className="accent-[#B35938] w-4 h-4 mt-0.5 rounded cursor-pointer shrink-0" 
+                    className="mt-1 flex-shrink-0 w-4 h-4 accent-[#B35938] rounded border-gray-300 cursor-pointer" 
                   />
                   <label htmlFor="terms" className="text-xs text-gray-500 leading-relaxed cursor-pointer select-none">
                     Saya menyetujui bahwa DP 75% tidak dapat dikembalikan jika batal sepihak, dan menyetujui Syarat & Ketentuan Weshareit.
