@@ -295,14 +295,17 @@ const Home = () => {
                     const item = trip.items.find(i => i.id === itemId);
                     if (!item) return null;
                     return (
-                      <div key={itemId} className="flex justify-between items-start gap-4 mb-3">
+                      <div key={itemId} className="flex justify-between items-start gap-4 border-b border-gray-100 pb-4 mb-4 last:border-0 last:pb-0 last:mb-0">
                         <div className="flex flex-col">
-                          <span className="font-medium text-slate-900 leading-tight">{item.name}</span>
-                          <span className="text-sm text-gray-500 mt-0.5">{qty}x</span>
+                          <span className="font-semibold text-slate-900 text-base leading-tight">{item.name}</span>
+                          <span className="text-xs text-gray-500 mt-1">Varian: {item.variant || 'Default'}</span>
+                          <span className="text-sm font-medium text-[#B35938] mt-1">Qty: {qty}</span>
                         </div>
-                        <span className="font-semibold text-slate-900 whitespace-nowrap">
-                          Rp {(item.price * qty).toLocaleString('id-ID')}
-                        </span>
+                        <div className="text-right shrink-0">
+                          <span className="font-bold text-slate-900 whitespace-nowrap">
+                            Rp {(item.price * qty).toLocaleString('id-ID')}
+                          </span>
+                        </div>
                       </div>
                     );
                   })}
