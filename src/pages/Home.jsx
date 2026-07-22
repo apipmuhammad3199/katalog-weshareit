@@ -300,14 +300,14 @@ const Home = () => {
                           <img 
                             src={item.image} 
                             alt={item.name} 
-                            className="w-14 h-14 rounded-lg object-cover flex-shrink-0 bg-gray-100" 
+                            className="w-14 h-14 rounded-lg object-cover shrink-0 bg-gray-100" 
                           />
                           <div className="flex flex-col min-w-0">
                             <h4 className="truncate font-medium text-slate-900">{item.name}</h4>
                             <span className="text-sm text-gray-500">Qty: {qty}</span>
                           </div>
                         </div>
-                        <div className="font-semibold text-slate-900 flex-shrink-0 whitespace-nowrap">
+                        <div className="font-semibold text-slate-900 shrink-0 whitespace-nowrap">
                           Rp {(item.price * qty).toLocaleString('id-ID')}
                         </div>
                       </div>
@@ -342,7 +342,7 @@ const Home = () => {
                     id="terms"
                     checked={isAgreed}
                     onChange={(e) => setIsAgreed(e.target.checked)}
-                    className="mt-1 flex-shrink-0 w-4 h-4 accent-[#B35938] rounded border-gray-300 cursor-pointer" 
+                    className="mt-1 shrink-0 w-4 h-4 accent-[#B35938] rounded border-gray-300 cursor-pointer" 
                   />
                   <label htmlFor="terms" className="text-xs text-gray-500 leading-relaxed cursor-pointer select-none">
                     Saya menyetujui bahwa DP 75% tidak dapat dikembalikan jika batal sepihak, dan menyetujui Syarat & Ketentuan Weshareit.
