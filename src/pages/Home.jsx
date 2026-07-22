@@ -287,18 +287,18 @@ const Home = () => {
 
             {/* RIGHT COLUMN: Sticky Order Summary */}
             <div className="w-full lg:w-2/5">
-              <div className="sticky top-28 bg-white p-6 md:p-8 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col max-h-[calc(100vh-140px)]">
+              <div className="sticky top-28 bg-white p-6 md:p-8 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.03)] border border-gray-100 h-fit w-full">
                 <h3 className="text-xl font-bold tracking-tight text-slate-900 mb-6">Order Summary</h3>
                 
-                <div className="flex-1 overflow-y-auto pr-2">
+                <div>
                   {Object.entries(cart).map(([itemId, qty]) => {
                     const item = trip.items.find(i => i.id === itemId);
                     if (!item) return null;
                     return (
                       <div key={itemId} className="flex justify-between items-start pb-4 mb-4 border-b border-gray-100 last:border-0 last:pb-0 last:mb-0">
                         {/* Left Side: Name and Qty */}
-                        <div className="flex flex-col pr-4">
-                          <span className="font-semibold text-slate-900 leading-tight">
+                        <div className="flex flex-col pr-4 min-w-0">
+                          <span className="font-semibold text-slate-900 leading-tight break-words">
                             {item.name}
                           </span>
                           <span className="text-sm font-medium text-gray-500 mt-1">
