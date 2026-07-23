@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Save, Upload } from 'lucide-react';
 import useProductStore from '../../store/useProductStore';
+import { formatNumberWithDots } from '../../utils/formatters';
 
 const ProductForm = ({ item, onSuccess }) => {
   const { trip, updateTrip } = useProductStore();
@@ -19,7 +20,15 @@ const ProductForm = ({ item, onSuccess }) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'price' ? Number(value) || '' : value
+      [name]: value
+    }));
+  };
+
+  const handlePriceChange = (e) => {
+    const raw = e.target.value.replace(/\D/g, '');
+    setFormData(prev => ({
+      ...prev,
+      price: raw ? Number(raw) : ''
     }));
   };
 
@@ -66,9 +75,13 @@ const ProductForm = ({ item, onSuccess }) => {
       <div>
         <label className="mb-1.5 block text-sm font-bold text-slate-700">Harga (Rp) *</label>
         <input 
-          type="number" name="price" value={formData.price} onChange={handleChange}
+          type="text"
+          inputMode="numeric"
+          name="price" 
+          value={formatNumberWithDots(formData.price)} 
+          onChange={handlePriceChange}
           className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm outline-none transition-colors focus:border-[#bd6a4d] focus:bg-white" 
-          placeholder="Contoh: 150000"
+          placeholder="Contoh: 150.000"
           required 
         />
       </div>

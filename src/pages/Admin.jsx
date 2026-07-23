@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Package, Eye, X, AlertCircle, Check, MessageCircle } from 'lucide-react';
 import AdminProducts from '../components/Admin/AdminProducts';
+import { formatNumberWithDots } from '../utils/formatters';
 
 const MOCK_DUMMY_ORDERS = [
   {
@@ -407,12 +408,17 @@ const Admin = () => {
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 font-bold text-gray-500">Rp</span>
                   <input 
-                    type="number" 
+                    type="text" 
+                    inputMode="numeric"
                     required
-                    value={shippingBillingModal.ongkir}
-                    onChange={(e) => setShippingBillingModal({...shippingBillingModal, ongkir: e.target.value})}
+                    value={shippingBillingModal.ongkir ? formatNumberWithDots(shippingBillingModal.ongkir) : ''}
+                    onChange={(e) => {
+                      const raw = e.target.value.replace(/\D/g, '');
+                      const formatted = raw ? Number(raw).toLocaleString('id-ID') : '';
+                      setShippingBillingModal({...shippingBillingModal, ongkir: formatted});
+                    }}
                     className="w-full rounded-xl border border-gray-200 bg-slate-50 py-3 pl-12 pr-4 text-slate-900 outline-none focus:border-[#B35938] focus:bg-white focus:ring-1 focus:ring-[#B35938]"
-                    placeholder="50000"
+                    placeholder="50.000"
                   />
                 </div>
               </div>
