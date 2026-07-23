@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
 import { Save, Upload } from 'lucide-react';
-import useProductStore from '../../store/useProductStore';
 import { formatNumberWithDots } from '../../utils/formatters';
 
-const ProductForm = ({ item, onSuccess }) => {
-  const { trip, updateTrip } = useProductStore();
-  
+const ProductForm = ({ item, onSave, onSuccess }) => {
   const [formData, setFormData] = useState(
     item || {
       name: '',
@@ -48,14 +45,15 @@ const ProductForm = ({ item, onSuccess }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (item) {
-      const newItems = trip.items.map(i => i.id === item.id ? { ...formData, id: item.id } : i);
-      updateTrip({ ...trip, items: newItems });
-    } else {
-      const newItem = { ...formData, id: `item-${Date.now()}` };
-      updateTrip({ ...trip, items: [newItem, ...trip.items] });
+    const numericPrice = typeof formData.price === 'number' ? formData.price : (Number(String(formData.price).replace(/\D/g, '')) || 0);
+    const itemData = {
+      ...formData,
+      price: numericPrice,
+      id: item?.id
+    };
+    if (onSave) {
+      onSave(itemData);
     }
-    onSuccess();
   };
 
   return (
