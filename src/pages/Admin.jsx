@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Package, Eye, X, AlertCircle, Check, MessageCircle } from 'lucide-react';
+import { ShoppingBag, Package, Eye, X, AlertCircle, Check, MessageCircle, MapPin } from 'lucide-react';
 import AdminProducts from '../components/Admin/AdminProducts';
+import AdminTrips from '../components/Admin/AdminTrips';
 import { formatNumberWithDots } from '../utils/formatters';
 
 const MOCK_DUMMY_ORDERS = [
@@ -191,13 +192,19 @@ const Admin = () => {
           {/* Tabs */}
           <div className="flex flex-wrap gap-4">
             <button 
-              className={`flex items-center gap-2 rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 ${activeTab === 'orders' ? 'bg-slate-900 text-white shadow-md' : 'bg-transparent text-gray-500 border border-slate-200 hover:border-slate-300'}`}
+              className={`flex items-center gap-2 rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 cursor-pointer ${activeTab === 'orders' ? 'bg-slate-900 text-white shadow-md' : 'bg-transparent text-gray-500 border border-slate-200 hover:border-slate-300'}`}
               onClick={() => setActiveTab('orders')}
             >
               <ShoppingBag size={18} /> Data Pesanan (PO)
             </button>
             <button 
-              className={`flex items-center gap-2 rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 ${activeTab === 'products' ? 'bg-slate-900 text-white shadow-md' : 'bg-transparent text-gray-500 border border-slate-200 hover:border-slate-300'}`}
+              className={`flex items-center gap-2 rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 cursor-pointer ${activeTab === 'trips' ? 'bg-slate-900 text-white shadow-md' : 'bg-transparent text-gray-500 border border-slate-200 hover:border-slate-300'}`}
+              onClick={() => setActiveTab('trips')}
+            >
+              <MapPin size={18} /> Manajemen Trip PO
+            </button>
+            <button 
+              className={`flex items-center gap-2 rounded-full px-6 py-2 text-sm font-bold transition-all duration-300 cursor-pointer ${activeTab === 'products' ? 'bg-slate-900 text-white shadow-md' : 'bg-transparent text-gray-500 border border-slate-200 hover:border-slate-300'}`}
               onClick={() => setActiveTab('products')}
             >
               <Package size={18} /> Manajemen Item Trip
@@ -372,6 +379,8 @@ const Admin = () => {
                 </tbody>
               </table>
             </div>
+          ) : activeTab === 'trips' ? (
+            <AdminTrips />
           ) : (
             <div className="p-8">
               <AdminProducts />

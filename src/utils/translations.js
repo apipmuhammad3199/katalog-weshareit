@@ -93,6 +93,7 @@ export const translations = {
     // Admin Dashboard
     adminDashboard: "Admin Dashboard",
     tabOrders: "Data Pesanan (PO)",
+    tabTrips: "Manajemen Trip PO",
     tabProducts: "Manajemen Item Trip"
   },
   EN: {
@@ -189,6 +190,7 @@ export const translations = {
     // Admin Dashboard
     adminDashboard: "Admin Dashboard",
     tabOrders: "Order Data (PO)",
+    tabTrips: "Trip PO Management",
     tabProducts: "Trip Item Management"
   }
 };
