@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search } from 'lucide-react';
+import useLanguageStore from '../store/useLanguageStore';
 
 const Header = () => {
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const { lang, setLang, t } = useLanguageStore();
   const navigate = useNavigate();
 
   const handleSearchSubmit = (e) => {
@@ -43,7 +45,7 @@ const Header = () => {
             </button>
             <input 
               type="text"
-              placeholder="Track Order ID..."
+              placeholder={t('searchPlaceholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className={`h-10 w-full rounded-full bg-slate-100/80 pl-11 pr-4 text-sm font-medium text-slate-900 outline-none placeholder:text-gray-400 transition-all duration-300 ${
@@ -53,10 +55,22 @@ const Header = () => {
           </form>
 
           {/* Language Toggle */}
-          <div className="hidden sm:flex items-center text-sm font-semibold tracking-wide text-gray-500">
-            <button className="text-slate-900 transition-colors">ID</button>
+          <div className="flex items-center text-sm font-semibold tracking-wide text-gray-500">
+            <button 
+              type="button"
+              onClick={() => setLang('ID')}
+              className={`transition-colors cursor-pointer ${lang === 'ID' ? 'text-slate-900 font-bold' : 'hover:text-slate-900'}`}
+            >
+              ID
+            </button>
             <span className="mx-2 opacity-30">/</span>
-            <button className="hover:text-slate-900 transition-colors">EN</button>
+            <button 
+              type="button"
+              onClick={() => setLang('EN')}
+              className={`transition-colors cursor-pointer ${lang === 'EN' ? 'text-slate-900 font-bold' : 'hover:text-slate-900'}`}
+            >
+              EN
+            </button>
           </div>
           
         </div>

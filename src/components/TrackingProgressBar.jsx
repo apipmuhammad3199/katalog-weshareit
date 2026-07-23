@@ -1,14 +1,16 @@
 import React from 'react';
 import { ShoppingBag, Plane, Wallet, Truck, CheckCircle2, MessageCircle } from 'lucide-react';
+import useLanguageStore from '../store/useLanguageStore';
 
 const TrackingProgressBar = ({ order }) => {
-  // New swapped steps
+  const { t } = useLanguageStore();
+
   const steps = [
-    { id: 'PURCHASING', label: 'Pesanan\nDiproses', Icon: ShoppingBag },
-    { id: 'ARRIVED_LOCAL', label: 'Dikirim ke\nIndonesia', Icon: Plane },
-    { id: 'DELIVERING_STEP', label: 'Dikirim ke\nAlamatmu', Icon: Truck },
-    { id: 'PAYMENT_STEP', label: 'Menunggu\nPelunasan', Icon: Wallet },
-    { id: 'COMPLETED', label: 'Selesai', Icon: CheckCircle2 },
+    { id: 'PURCHASING', label: t('stepPurchasing'), Icon: ShoppingBag },
+    { id: 'ARRIVED_LOCAL', label: t('stepArrivedLocal'), Icon: Plane },
+    { id: 'DELIVERING_STEP', label: t('stepDelivering'), Icon: Truck },
+    { id: 'PAYMENT_STEP', label: t('stepPayment'), Icon: Wallet },
+    { id: 'COMPLETED', label: t('stepCompleted'), Icon: CheckCircle2 },
   ];
 
   // Determine current index based on status
@@ -31,7 +33,7 @@ const TrackingProgressBar = ({ order }) => {
     <div className="w-full">
       {/* Container: Clean white card with soft shadow */}
       <div className="rounded-3xl bg-white p-8 shadow-[0_4px_30px_rgba(0,0,0,0.03)] border border-gray-100">
-        <h3 className="mb-8 text-center text-lg font-bold text-slate-900">Status Perjalanan Pesanan</h3>
+        <h3 className="mb-8 text-center text-lg font-bold text-slate-900">{t('orderProgressTitle')}</h3>
         
         <div className="relative flex justify-between items-center w-full z-0">
           {/* Continuous horizontal line (background) */}
@@ -92,26 +94,26 @@ const TrackingProgressBar = ({ order }) => {
       {currentIndex === 3 && order && (
         <div className="mt-6 rounded-3xl bg-white p-8 shadow-[0_4px_30px_rgba(0,0,0,0.03)] border border-[#B35938]/20 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1.5 h-full bg-[#B35938]"></div>
-          <h4 className="text-xl font-bold text-[#B35938] mb-4">Waktunya Pelunasan!</h4>
+          <h4 className="text-xl font-bold text-[#B35938] mb-4">{t('timeForFinalPayment')}</h4>
           
           <p className="text-sm text-slate-600 mb-6 leading-relaxed">
-            Pesananmu telah dikirim. Selesaikan pembayaran sisa tagihan agar pesanan dapat segera sampai ke tanganmu.
+            {t('finalPaymentDesc')}
           </p>
 
           {/* Tracking Info & Balance Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             <div className="rounded-2xl border border-gray-100 bg-slate-50 p-4">
-              <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-1">Informasi Pengiriman</p>
-              <p className="font-bold text-slate-900 mb-0.5">{order.resi?.courier || 'Kurir'}</p>
-              <p className="font-mono text-slate-600 text-sm tracking-wider">{order.resi?.receipt || 'Resi tidak tersedia'}</p>
+              <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-1">{t('shippingInfo')}</p>
+              <p className="font-bold text-slate-900 mb-0.5">{order.resi?.courier || t('courier')}</p>
+              <p className="font-mono text-slate-600 text-sm tracking-wider">{order.resi?.receipt || t('receiptNotAvailable')}</p>
             </div>
             
             <div className="rounded-2xl border border-gray-100 bg-slate-50 p-4 flex flex-col justify-center">
-              <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-1">Total Sisa Tagihan</p>
+              <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-1">{t('totalRemainingBalance')}</p>
               <p className="text-3xl font-bold text-[#B35938]">
                 Rp {order.remaining_amount?.toLocaleString('id-ID')}
               </p>
-              <p className="text-xs text-gray-500 mt-1">Termasuk ongkos kirim</p>
+              <p className="text-xs text-gray-500 mt-1">{t('includesShipping')}</p>
             </div>
           </div>
 
@@ -122,7 +124,7 @@ const TrackingProgressBar = ({ order }) => {
             className="w-full rounded-xl bg-[#25D366] px-6 py-3.5 text-sm font-bold text-white shadow-md hover:bg-[#128C7E] transition-colors flex items-center justify-center gap-2"
           >
             <MessageCircle size={20} />
-            Kirim Bukti via WhatsApp
+            {t('sendProofWA')}
           </a>
         </div>
       )}

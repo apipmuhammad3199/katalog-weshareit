@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MessageCircle, CheckCircle, AlertCircle } from 'lucide-react';
 import TrackingProgressBar from '../components/TrackingProgressBar';
+import useLanguageStore from '../store/useLanguageStore';
 
 const TrackingStatusView = () => {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
+  const { t } = useLanguageStore();
 
   useEffect(() => {
     try {
@@ -30,9 +32,9 @@ const TrackingStatusView = () => {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#f7f5f0]">
         <div className="text-center">
-          <h2 className="text-lg font-bold text-slate-800">Pesanan Tidak Ditemukan</h2>
+          <h2 className="text-lg font-bold text-slate-800">{t('orderNotFound')}</h2>
           <Link to="/" className="mt-4 inline-block rounded-full bg-[#bd6a4d] px-6 py-2 text-sm font-bold text-white transition-colors hover:bg-[#a65d43]">
-            Kembali ke Beranda
+            {t('backHome')}
           </Link>
         </div>
       </div>
@@ -44,7 +46,7 @@ const TrackingStatusView = () => {
   return (
     <div className="min-h-screen bg-[#fcfcfc] p-6 md:py-16 font-sans text-slate-900 pb-32">
       <div className="mx-auto max-w-2xl">
-        <div className="rounded-[2.5rem] bg-white p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#ebebeb] text-center relative overflow-hidden">
+        <div className="rounded-3xl bg-white p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-[#ebebeb] text-center relative overflow-hidden">
           
           <div className="mb-6 flex justify-center">
             {order.payment_status === 'AWAITING_VERIFICATION' ? (
@@ -58,9 +60,9 @@ const TrackingStatusView = () => {
             )}
           </div>
           
-          <h1 className="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-slate-900">Detail Pesanan</h1>
+          <h1 className="mb-2 text-2xl md:text-3xl font-bold tracking-tight text-slate-900">{t('orderDetails')}</h1>
           <p className="mb-8 text-sm text-slate-500">
-            ID Pesanan: <strong className="font-mono tracking-wider">{order.id}</strong>
+            {t('orderID')} <strong className="font-mono tracking-wider">{order.id}</strong>
           </p>
 
           <div className="mb-10 flex flex-col items-center gap-3">
@@ -84,27 +86,27 @@ const TrackingStatusView = () => {
           </div>
 
           <div className="text-left rounded-3xl bg-slate-50 p-6 md:p-8 mb-10 border border-slate-100">
-            <h3 className="mb-5 font-bold tracking-widest text-slate-500 text-xs uppercase">Ringkasan</h3>
+            <h3 className="mb-5 font-bold tracking-widest text-slate-500 text-xs uppercase">{t('summary')}</h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-slate-500">Trip</span>
+                <span className="text-slate-500">{t('trip')}</span>
                 <span className="font-medium text-slate-700">{order.tripTitle}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Skema Pembayaran</span>
+                <span className="text-slate-500">{t('paymentScheme')}</span>
                 <span className="font-medium text-slate-700">{order.payment_scheme}</span>
               </div>
               <div className="flex justify-between pt-2 border-t border-slate-200">
-                <span className="text-slate-500">Total Harga</span>
-                <span className="font-medium text-slate-700">Rp {order.total_amount.toLocaleString('id-ID')}</span>
+                <span className="text-slate-500">{t('totalPrice')}</span>
+                <span className="font-medium text-slate-700">Rp {order.total_amount?.toLocaleString('id-ID')}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Telah Dibayar</span>
-                <span className="font-medium text-green-600">Rp {order.paid_amount.toLocaleString('id-ID')}</span>
+                <span className="text-slate-500">{t('paidAmount')}</span>
+                <span className="font-medium text-green-600">Rp {order.paid_amount?.toLocaleString('id-ID')}</span>
               </div>
               <div className="flex justify-between font-bold pt-3 border-t border-slate-200">
-                <span className="text-slate-900">Sisa Tagihan</span>
-                <span className="text-[#bd6a4d] text-base">Rp {order.remaining_amount.toLocaleString('id-ID')}</span>
+                <span className="text-slate-900">{t('remainingBalance')}</span>
+                <span className="text-[#bd6a4d] text-base">Rp {order.remaining_amount?.toLocaleString('id-ID')}</span>
               </div>
             </div>
           </div>
@@ -114,7 +116,7 @@ const TrackingStatusView = () => {
 
           <button onClick={handleWhatsApp} className="flex w-full items-center justify-center gap-2 rounded-2xl border border-[#ebebeb] bg-white px-6 py-4 text-sm font-bold text-slate-700 shadow-[0_4px_15px_rgb(0,0,0,0.02)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_25px_rgb(0,0,0,0.05)] hover:border-slate-200 mt-6">
             <MessageCircle size={20} className="text-[#25D366]" />
-            Tanya Admin via WhatsApp
+            {t('askAdminWA')}
           </button>
         </div>
       </div>

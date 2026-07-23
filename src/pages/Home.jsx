@@ -4,6 +4,7 @@ import { ArrowLeft, Copy, CheckCircle2, Upload, MapPin, Calendar, Info } from 'l
 import ProductCard from '../components/ProductCard';
 import useProductStore from '../store/useProductStore';
 import useCartStore from '../store/useCartStore';
+import useLanguageStore from '../store/useLanguageStore';
 
 const Home = () => {
   const { id } = useParams();
@@ -11,6 +12,7 @@ const Home = () => {
   const trips = useProductStore((state) => state.trips);
   const trip = trips.find(t => t.id === id);
   const { cart, clearCart } = useCartStore();
+  const { t } = useLanguageStore();
   
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
@@ -116,7 +118,7 @@ const Home = () => {
   if (!trip) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#f7f5f0]">
-        <p className="text-gray-500 font-medium tracking-wide">Trip tidak ditemukan.</p>
+        <p className="text-gray-500 font-medium tracking-wide">{t('tripNotFound')}</p>
       </div>
     );
   }
@@ -148,12 +150,12 @@ const Home = () => {
         <div className="absolute bottom-0 left-0 w-full p-8 md:p-16">
           <div className="mx-auto max-w-7xl">
             <Link to="/" className="inline-flex items-center gap-2 text-sm font-bold tracking-widest text-white/70 hover:text-white transition-colors mb-6 uppercase">
-              <ArrowLeft size={16} /> Back to Discover
+              <ArrowLeft size={16} /> {t('backToDiscover')}
             </Link>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4 leading-tight">{trip.title}</h1>
             <div className="flex flex-wrap items-center gap-6 text-gray-200 text-sm md:text-base">
               <span className="flex items-center gap-2"><MapPin size={18} /> {trip.destination}</span>
-              <span className="flex items-center gap-2"><Calendar size={18} /> Close PO: {trip.deadline}</span>
+              <span className="flex items-center gap-2"><Calendar size={18} /> {t('closePODate')} {trip.deadline}</span>
             </div>
           </div>
         </div>
@@ -163,7 +165,7 @@ const Home = () => {
         
         {/* Product Grid */}
         <div className="mb-24">
-          <h2 className="text-2xl font-bold tracking-tight text-slate-900 mb-8">Curated Items</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-slate-900 mb-8">{t('curatedItems')}</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
             {trip.items.map((item) => (
               <ProductCard key={item.id} product={item} />
@@ -174,34 +176,34 @@ const Home = () => {
         {/* Split-Screen Checkout Form */}
         {totalItems === 0 ? (
           <div className="py-24 text-center border-t border-gray-100">
-            <p className="text-xl text-gray-500 font-medium tracking-wide">Pilih barang di atas untuk mulai memesan.</p>
+            <p className="text-xl text-gray-500 font-medium tracking-wide">{t('selectItemsToOrder')}</p>
           </div>
         ) : (
           <div className="lg:flex lg:gap-16 relative" id="checkout-section">
             
             {/* LEFT COLUMN: Scrollable Form */}
             <div className="w-full lg:w-3/5 pb-12">
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-12 border-b border-gray-200 pb-4">Checkout Details</h2>
+              <h2 className="text-3xl font-bold tracking-tight text-slate-900 mb-12 border-b border-gray-200 pb-4">{t('checkoutDetails')}</h2>
               
               <form id="checkout-form" onSubmit={handleOrderSubmit} className="space-y-16">
                 
                 {/* User Details */}
                 <section>
-                  <h3 className="text-sm font-bold tracking-widest text-gray-400 uppercase mb-6">1. Your Information</h3>
+                  <h3 className="text-sm font-bold tracking-widest text-gray-400 uppercase mb-6">{t('section1Title')}</h3>
                   <div className="space-y-6">
-                    <InputField label="Full Name" name="name" value={customerInfo.name} required placeholder="John Doe" />
-                    <InputField label="WhatsApp Number" type="tel" name="phone" value={customerInfo.phone} required placeholder="81234567890" />
+                    <InputField label={t('fullName')} name="name" value={customerInfo.name} required placeholder="John Doe" />
+                    <InputField label={t('whatsappNumber')} type="tel" name="phone" value={customerInfo.phone} required placeholder="81234567890" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <InputField label="Email (Optional)" type="email" name="email" value={customerInfo.email} placeholder="john@example.com" />
-                      <InputField label="Telegram (Optional)" name="telegram" value={customerInfo.telegram} placeholder="@username" />
+                      <InputField label={t('emailOptional')} type="email" name="email" value={customerInfo.email} placeholder="john@example.com" />
+                      <InputField label={t('telegramOptional')} name="telegram" value={customerInfo.telegram} placeholder="@username" />
                     </div>
-                    <InputField label="Order Notes (Optional)" name="notes" value={customerInfo.notes} placeholder="Size, color, variants..." />
+                    <InputField label={t('orderNotes')} name="notes" value={customerInfo.notes} placeholder="Size, color, variants..." />
                   </div>
                 </section>
 
                 {/* Delivery */}
                 <section>
-                  <h3 className="text-sm font-bold tracking-widest text-gray-400 uppercase mb-6">2. Delivery Method</h3>
+                  <h3 className="text-sm font-bold tracking-widest text-gray-400 uppercase mb-6">{t('section2Title')}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <label className={`flex cursor-pointer items-start gap-4 border p-6 transition-all duration-300 ${customerInfo.shippingMethod === 'instant' ? 'border-[#B35938] bg-[#B35938]/5 shadow-sm' : 'border-gray-200 bg-transparent hover:border-gray-300'}`}>
                       <input 
@@ -210,8 +212,8 @@ const Home = () => {
                         className="mt-1 h-4 w-4 accent-[#B35938]"
                       />
                       <div>
-                        <p className="font-bold text-slate-900">Instant (GoSend/Grab)</p>
-                        <p className="text-sm text-gray-500 mt-1">Same-day local delivery</p>
+                        <p className="font-bold text-slate-900">{t('instantCourier')}</p>
+                        <p className="text-sm text-gray-500 mt-1">{t('instantDesc')}</p>
                       </div>
                     </label>
                     <label className={`flex cursor-pointer items-start gap-4 border p-6 transition-all duration-300 ${customerInfo.shippingMethod === 'courier' ? 'border-[#B35938] bg-[#B35938]/5 shadow-sm' : 'border-gray-200 bg-transparent hover:border-gray-300'}`}>
@@ -221,37 +223,37 @@ const Home = () => {
                         className="mt-1 h-4 w-4 accent-[#B35938]"
                       />
                       <div>
-                        <p className="font-bold text-slate-900">Standard Courier</p>
-                        <p className="text-sm text-gray-500 mt-1">JNE, J&T, Sicepat</p>
+                        <p className="font-bold text-slate-900">{t('standardCourier')}</p>
+                        <p className="text-sm text-gray-500 mt-1">{t('standardDesc')}</p>
                       </div>
                     </label>
                   </div>
                   {(customerInfo.shippingMethod === 'courier' || customerInfo.shippingMethod === 'instant') && (
-                    <InputField label="Full Address" name="address" value={customerInfo.address} required placeholder="Street name, City, Zip Code" />
+                    <InputField label={t('fullAddress')} name="address" value={customerInfo.address} required placeholder="Street name, City, Zip Code" />
                   )}
 
                   <div className="mt-6 flex items-start gap-3 bg-slate-50 p-5 border border-gray-100 text-slate-700">
                     <Info className="shrink-0 mt-0.5 text-[#B35938]" size={18} />
                     <p className="text-sm leading-relaxed">
-                      Ongkos kirim aktual akan dihitung setelah barang tiba di Indonesia dan ditambahkan pada tagihan Pelunasan.
+                      {t('ongkirNotice')}
                     </p>
                   </div>
                 </section>
 
                 {/* Payment Options */}
                 <section>
-                  <h3 className="text-sm font-bold tracking-widest text-gray-400 uppercase mb-6">3. Payment Plan</h3>
+                  <h3 className="text-sm font-bold tracking-widest text-gray-400 uppercase mb-6">{t('section3Title')}</h3>
                   <div className="border border-gray-100 p-6 bg-slate-50">
-                    <p className="font-bold text-slate-900 mb-1">Down Payment (75%)</p>
-                    <p className="text-sm text-gray-500">Settle the remaining 25% balance upon arrival.</p>
+                    <p className="font-bold text-slate-900 mb-1">{t('dpTitle')}</p>
+                    <p className="text-sm text-gray-500">{t('dpDesc')}</p>
                   </div>
                 </section>
 
                 {/* Bank Transfer & Proof */}
                 <section>
-                  <h3 className="text-sm font-bold tracking-widest text-gray-400 uppercase mb-6">4. Transfer & Verify</h3>
+                  <h3 className="text-sm font-bold tracking-widest text-gray-400 uppercase mb-6">{t('section4Title')}</h3>
                   <div className="bg-white p-8 shadow-[0_4px_40px_rgba(0,0,0,0.03)] border border-gray-100 mb-8">
-                    <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">Bank Transfer (BCA)</p>
+                    <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-2">{t('bankTransferBCA')}</p>
                     <div className="flex items-center justify-between mt-4 pb-4 border-b border-gray-100">
                       <div>
                         <p className="text-2xl font-bold tracking-widest text-slate-900 font-mono">1234 5678 90</p>
@@ -263,19 +265,19 @@ const Home = () => {
                         className="flex h-12 px-6 items-center gap-2 bg-slate-50 text-slate-900 text-sm font-bold hover:bg-slate-100 transition-colors"
                       >
                         {copied ? <CheckCircle2 size={16} className="text-emerald-600" /> : <Copy size={16} />}
-                        {copied ? 'Copied' : 'Copy'}
+                        {copied ? t('copied') : t('copy')}
                       </button>
                     </div>
 
                     <div className="mt-8">
-                      <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Upload Receipt *</p>
+                      <p className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">{t('uploadReceipt')}</p>
                       <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-200 border-dashed bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer relative overflow-hidden group">
                         {paymentProofBase64 && (
                           <img src={paymentProofBase64} alt="Proof" className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-30 transition-opacity" />
                         )}
                         <div className="flex flex-col items-center justify-center z-10">
                           <Upload className="w-8 h-8 mb-3 text-slate-400 group-hover:text-[#B35938] transition-colors" />
-                          <p className="text-sm font-bold text-slate-700">{paymentProofBase64 ? 'Change Image' : 'Select Image File'}</p>
+                          <p className="text-sm font-bold text-slate-700">{paymentProofBase64 ? t('changeImage') : t('selectImageFile')}</p>
                         </div>
                         <input type="file" className="hidden" accept="image/*" onChange={handleUploadProof} />
                       </label>
@@ -288,7 +290,7 @@ const Home = () => {
             {/* RIGHT COLUMN: Sticky Order Summary */}
             <div className="w-full lg:w-2/5">
               <div className="sticky top-28 bg-white p-6 md:p-8 rounded-2xl shadow-[0_4px_30px_rgba(0,0,0,0.03)] border border-gray-100 h-fit w-full">
-                <h3 className="text-xl font-bold tracking-tight text-slate-900 mb-6">Order Summary</h3>
+                <h3 className="text-xl font-bold tracking-tight text-slate-900 mb-6">{t('orderSummary')}</h3>
                 
                 <div>
                   {Object.entries(cart).map(([itemId, qty]) => {
@@ -302,7 +304,7 @@ const Home = () => {
                             {item.name}
                           </span>
                           <span className="text-sm font-medium text-gray-500 mt-1">
-                            Qty: {qty}
+                            {t('qty')} {qty}
                           </span>
                         </div>
                         
@@ -320,11 +322,11 @@ const Home = () => {
                 <hr className="my-5 border-dashed border-gray-200" />
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-500">Subtotal</span>
+                    <span className="text-sm text-gray-500">{t('subtotal')}</span>
                     <span className="text-sm font-medium text-slate-900">Rp {totalPrice.toLocaleString('id-ID')}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-500">Sisa Pelunasan 25%</span>
+                    <span className="text-sm text-gray-500">{t('remaining25')}</span>
                     <span className="text-sm font-medium text-slate-900">Rp {remainingAmount.toLocaleString('id-ID')}</span>
                   </div>
                 </div>
@@ -332,8 +334,8 @@ const Home = () => {
                 <hr className="my-5 border-gray-100" />
                 <div className="flex justify-between items-end">
                   <div className="flex flex-col">
-                    <span className="text-sm font-bold text-slate-900">Total DP Sekarang</span>
-                    <span className="text-xs text-gray-400">75% dari Subtotal</span>
+                    <span className="text-sm font-bold text-slate-900">{t('totalDPNow')}</span>
+                    <span className="text-xs text-gray-400">{t('dpPercentSubtotal')}</span>
                   </div>
                   <span className="text-2xl font-bold text-[#B35938]">Rp {amountToPayNow.toLocaleString('id-ID')}</span>
                 </div>
@@ -347,7 +349,7 @@ const Home = () => {
                     className="mt-1 shrink-0 w-4 h-4 accent-[#B35938] rounded border-gray-300 cursor-pointer" 
                   />
                   <label htmlFor="terms" className="text-xs text-gray-500 leading-relaxed cursor-pointer select-none">
-                    Saya menyetujui bahwa DP 75% tidak dapat dikembalikan jika batal sepihak, dan menyetujui Syarat & Ketentuan Weshareit.
+                    {t('termsAgreement')}
                   </label>
                 </div>
 
@@ -361,7 +363,7 @@ const Home = () => {
                       : 'bg-slate-900 hover:bg-slate-800'
                   }`}
                 >
-                  Place Order
+                  {t('placeOrder')}
                 </button>
               </div>
             </div>
