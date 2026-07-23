@@ -298,7 +298,7 @@ const Home = () => {
                       <div key={itemId} className="flex justify-between items-start pb-4 mb-4 border-b border-gray-100 last:border-0 last:pb-0 last:mb-0">
                         {/* Left Side: Name and Qty */}
                         <div className="flex flex-col pr-4 min-w-0">
-                          <span className="font-semibold text-slate-900 leading-tight break-words">
+                          <span className="font-semibold text-slate-900 leading-tight wrap-break-word">
                             {item.name}
                           </span>
                           <span className="text-sm font-medium text-gray-500 mt-1">
